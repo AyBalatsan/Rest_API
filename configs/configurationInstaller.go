@@ -1,16 +1,15 @@
 package configs
 
 import (
-	"log"
-
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func loadEnv() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("failed to load .env file")
+		logrus.Fatal("failed to load .env file %s", err.Error())
 	}
 }
 
@@ -20,7 +19,7 @@ func initConfig() {
 	viper.SetConfigName("config")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal("failed to load config file")
+		logrus.Fatal("failed to load config file %s", err.Error())
 	}
 }
 

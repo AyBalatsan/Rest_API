@@ -1,8 +1,9 @@
 package todo
 
 type User struct {
+	// Посмотреть потом есть ли расширение для описание структуры JSON
 	Id       uint   `json:"-"`
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Name     string `json:"name" binding:"required"`
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
