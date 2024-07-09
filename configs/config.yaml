@@ -14,7 +14,8 @@ database:
   # migrate -source file://schema -database "postgresql://postgres:qwerty@localhost:5436/todo_db?sslmode=disable" -verbose up запуск пиграции по верхней схеме
   # docker exec -it c4302bb79320 bin/bash для подключению к контейнеру
   # psql -U postgres
-  # migrate -path ./schema -database 'postgresql://postgres:qwer123@localhost:5432/todo_db?sslmode=disable' -verbose up
+  # migrate -path ./schema -database 'postgresql://postgres:qwer123@localhost:5432/golang?sslmode=disable' -verbose up
+  # migrate -path ./schema -database 'postgresql://postgres:qwer123@localhost:5432/golang?sslmode=disable' -verbose down
 # POSTGRES_USER="postgres"
 # POSTGRES_HOST="localhost"
 # POSTGRES_PORT="5432"

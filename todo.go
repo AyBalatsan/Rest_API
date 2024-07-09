@@ -1,25 +1,25 @@
 package todo
 
 type TodoList struct {
-	Id           uint   `json:"id"`
+	Id           int    `json:"id"`
 	Title        string `json:"title"`
 	Descriprtion string `json:"description"`
 }
 
 type UsersList struct {
-	Id     uint
-	UserId uint
-	ListId uint
+	Id     int
+	UserId int
+	ListId int
 }
 
 type TodoItem struct {
-	Id           uint   `json:"id"`
+	Id           int    `json:"id"`
 	Title        string `json:"title"`
 	Descriprtion string `json:"description"`
 	Done         bool   `json:"done"`
 }
 type ListsItem struct {
-	Id     uint
-	ItemId uint
-	ListId uint
+	Id     int
+	ItemId int
+	ListId int
 }
