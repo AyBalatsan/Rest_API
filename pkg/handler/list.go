@@ -9,68 +9,71 @@ import (
 )
 
 func (h *Handler) createList(c *gin.Context) {
-	idUser, err := getUserId(c)
+	userId, err := getUserId(c)
 	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
 	var input todo.TodoList
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	idRowList, err := h.services.TodoList.Create(idUser, input)
+
+	id, err := h.services.TodoList.Create(userId, input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"id": idRowList,
+		"id": id,
 	})
 }
 
 type getAllListsResponse struct {
 	Data []todo.TodoList `json:"data"`
 }
-type getByIdListsResponse struct {
-	Data todo.TodoList `json:"data"`
-}
-type statusResponse struct {
-	Status string `json:"status"`
-}
 
-func (h *Handler) getAllList(c *gin.Context) {
-	idUser, err := getUserId(c)
-	if err != nil {
-		return
-	}
-	lists, err := h.services.GetAll(idUser)
+func (h *Handler) getAllLists(c *gin.Context) {
+	userId, err := getUserId(c)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	lists, err := h.services.TodoList.GetAll(userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	c.JSON(http.StatusOK, getAllListsResponse{
 		Data: lists,
 	})
-
 }
+
 func (h *Handler) getListById(c *gin.Context) {
-	idUser, err := getUserId(c)
+	userId, err := getUserId(c)
 	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
-	list, err := h.services.GetById(idUser, id)
+
+	list, err := h.services.TodoList.GetById(userId, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, getByIdListsResponse{
-		Data: list,
-	})
+
+	c.JSON(http.StatusOK, list)
 }
 
 func (h *Handler) updateList(c *gin.Context) {
